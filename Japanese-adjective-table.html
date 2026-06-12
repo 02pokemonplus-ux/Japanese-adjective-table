@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日文形容詞變化表</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: #f5f6fa;
+    color: #222;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+    color: #1a1a2e;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 28px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .tab {
+    padding: 8px 28px;
+    border-radius: 999px;
+    border: 2px solid #ccc;
+    background: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    color: #555;
+  }
+
+  .tab.active-i {
+    background: #e8f4fd;
+    border-color: #4a90d9;
+    color: #2563a8;
+  }
+
+  .tab.active-na {
+    background: #fef3e8;
+    border-color: #e07a2f;
+    color: #b85c10;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .card-header {
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-header-i { background: #e8f4fd; color: #2563a8; border-bottom: 2px solid #b8d9f5; }
+  .card-header-na { background: #fef3e8; color: #b85c10; border-bottom: 2px solid #f5c89a; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  thead tr {
+    background: #f0f4f8;
+  }
+
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    color: #444;
+    border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap;
+  }
+
+  tbody tr:nth-child(even) { background: #fafbfd; }
+  tbody tr:hover { background: #f0f6ff; }
+
+  tbody td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  td.form-name {
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  td.tag-cell { white-space: nowrap; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    margin-right: 2px;
+  }
+
+  .tag-basic { background: #e8f4fd; color: #2563a8; }
+  .tag-neg { background: #fde8e8; color: #c0392b; }
+  .tag-past { background: #e8fde8; color: #1a7a2f; }
+  .tag-past-neg { background: #fef9e8; color: #a07010; }
+  .tag-other { background: #f0e8fd; color: #6a2ba8; }
+
+  .tag-basic-na { background: #fef3e8; color: #b85c10; }
+  .tag-neg-na { background: #fde8e8; color: #c0392b; }
+  .tag-past-na { background: #e8fde8; color: #1a7a2f; }
+  .tag-past-neg-na { background: #fef9e8; color: #a07010; }
+  .tag-other-na { background: #f0e8fd; color: #6a2ba8; }
+
+  td.jp { font-size: 1rem; color: #1a1a2e; }
+  td.example { color: #444; }
+  td.zh { color: #666; font-size: 0.83rem; }
+
+  .note {
+    font-size: 0.8rem;
+    color: #888;
+    padding: 10px 20px 14px;
+    background: #f8f9fa;
+    border-top: 1px solid #eee;
+  }
+
+  .rule-box {
+    margin: 0 0 22px 0;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 18px 22px;
+  }
+
+  .rule-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .rule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .rule-item {
+    background: #f5f6fa;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+
+  .rule-item .arrow { color: #888; margin: 0 4px; }
+  .rule-item .after { font-weight: 700; color: #2563a8; }
+  .rule-item-na .after { color: #b85c10; }
+
+  .rule-item-na {
+    background: #fef9f3;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    h1 { font-size: 1.25rem; }
+    .tab { padding: 7px 18px; font-size: 0.88rem; }
+    table { font-size: 0.82rem; }
+    thead th, tbody td { padding: 7px 10px; }
+    td.jp { font-size: 0.92rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🇯🇵 日文形容詞變化表</h1>
+<p class="subtitle">日本語形容詞活用表 ／ い形容詞・な形容詞</p>
+
+<div class="tabs">
+  <button class="tab active-i" onclick="switchTab('i')">い形容詞（形容詞）</button>
+  <button class="tab" id="tab-na" onclick="switchTab('na')">な形容詞（形容動詞）</button>
+</div>
+
+<!-- ======================== い形容詞 ======================== -->
+<div id="sec-i" class="section active">
+
+  <div class="rule-box">
+    <div class="rule-title">📌 變化規則（語幹 = 去掉「い」的部分）</div>
+    <div class="rule-grid">
+      <div class="rule-item">否定：語幹<span class="arrow">→</span><span class="after">〜くない</span></div>
+      <div class="rule-item">過去：語幹<span class="arrow">→</span><span class="after">〜かった</span></div>
+      <div class="rule-item">過去否定：語幹<span class="arrow">→</span><span class="after">〜くなかった</span></div>
+      <div class="rule-item">て形：語幹<span class="arrow">→</span><span class="after">〜くて</span></div>
+      <div class="rule-item">副詞：語幹<span class="arrow">→</span><span class="after">〜く</span></div>
+      <div class="rule-item">假設：語幹<span class="arrow">→</span><span class="after">〜ければ</span></div>
+      <div class="rule-item">⚠ いい → <span class="after">よ〜</span>（特殊）</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header card-header-i">🔵 い形容詞變化表 ─ 以「暑い（あつい）」為例</div>
+    <table>
+      <thead>
+        <tr>
+          <th>變化形</th>
+          <th>活用形</th>
+          <th>日文形式</th>
+          <th>例句</th>
+          <th>中文</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="form-name">辭書形</td>
+          <td class="tag-cell"><span class="tag tag-basic">基本形</span></td>
+          <td class="jp">暑い</td>
+          <td class="example">今日は暑い。</td>
+          <td class="zh">今天很熱。</td>
+        </tr>
+        <tr>
+          <td class="form-name">語幹</td>
+          <td class="tag-cell"><span class="tag tag-basic">語幹</span></td>
+          <td class="jp">暑（あつ）</td>
+          <td class="example">—</td>
+          <td class="zh">去掉「い」的部分</td>
+        </tr>
+        <tr>
+          <td class="form-name">修飾名詞</td>
+          <td class="tag-cell"><span class="tag tag-basic">連體形</span></td>
+          <td class="jp">暑い＋名詞</td>
+          <td class="example">暑い夏。</td>
+          <td class="zh">炎熱的夏天。（直接加名詞）</td>
+        </tr>
+        <tr>
+          <td class="form-name">否定（普通體）</td>
+          <td class="tag-cell"><span class="tag tag-neg">否定</span></td>
+          <td class="jp">暑くない</td>
+          <td class="example">今日は暑くない。</td>
+          <td class="zh">今天不熱。</td>
+        </tr>
+        <tr>
+          <td class="form-name">否定（丁寧體）</td>
+          <td class="tag-cell"><span class="tag tag-neg">否定丁寧</span></td>
+          <td class="jp">暑くないです／暑くありません</td>
+          <td class="example">今日は暑くないです。</td>
+          <td class="zh">今天不熱。（禮貌體）</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去（普通體）</td>
+          <td class="tag-cell"><span class="tag tag-past">過去</span></td>
+          <td class="jp">暑かった</td>
+          <td class="example">昨日は暑かった。</td>
+          <td class="zh">昨天很熱。</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去（丁寧體）</td>
+          <td class="tag-cell"><span class="tag tag-past">過去丁寧</span></td>
+          <td class="jp">暑かったです</td>
+          <td class="example">昨日は暑かったです。</td>
+          <td class="zh">昨天很熱。（禮貌體）</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去否定（普通）</td>
+          <td class="tag-cell"><span class="tag tag-past-neg">過去否定</span></td>
+          <td class="jp">暑くなかった</td>
+          <td class="example">昨日は暑くなかった。</td>
+          <td class="zh">昨天不熱。</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去否定（丁寧）</td>
+          <td class="tag-cell"><span class="tag tag-past-neg">過去否定丁寧</span></td>
+          <td class="jp">暑くなかったです／暑くありませんでした</td>
+          <td class="example">昨日は暑くありませんでした。</td>
+          <td class="zh">昨天不熱。（禮貌體）</td>
+        </tr>
+        <tr>
+          <td class="form-name">て形（並列/原因）</td>
+          <td class="tag-cell"><span class="tag tag-other">て形</span></td>
+          <td class="jp">暑くて</td>
+          <td class="example">暑くて、眠れない。</td>
+          <td class="zh">因為很熱，睡不著。</td>
+        </tr>
+        <tr>
+          <td class="form-name">副詞形</td>
+          <td class="tag-cell"><span class="tag tag-other">副詞</span></td>
+          <td class="jp">暑く</td>
+          <td class="example">部屋を暑くする。</td>
+          <td class="zh">把房間弄熱。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜くなる（變化）</td>
+          <td class="tag-cell"><span class="tag tag-other">変化</span></td>
+          <td class="jp">暑くなる</td>
+          <td class="example">夏になって暑くなった。</td>
+          <td class="zh">進入夏天後變熱了。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜くする（使役）</td>
+          <td class="tag-cell"><span class="tag tag-other">使役</span></td>
+          <td class="jp">暑くする</td>
+          <td class="example">エアコンを切って部屋を暑くした。</td>
+          <td class="zh">關掉冷氣，讓房間變熱。</td>
+        </tr>
+        <tr>
+          <td class="form-name">假設形</td>
+          <td class="tag-cell"><span class="tag tag-other">假設</span></td>
+          <td class="jp">暑ければ</td>
+          <td class="example">暑ければ、窓を開けてください。</td>
+          <td class="zh">如果熱的話，請開窗。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜そう（樣態）</td>
+          <td class="tag-cell"><span class="tag tag-other">樣態</span></td>
+          <td class="jp">暑そう</td>
+          <td class="example">外は暑そうだね。</td>
+          <td class="zh">外面看起來很熱呢。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜すぎる（過度）</td>
+          <td class="tag-cell"><span class="tag tag-other">過度</span></td>
+          <td class="jp">暑すぎる</td>
+          <td class="example">今日は暑すぎる。</td>
+          <td class="zh">今天熱得太過分了。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜さ（名詞化）</td>
+          <td class="tag-cell"><span class="tag tag-other">名詞化</span></td>
+          <td class="jp">暑さ</td>
+          <td class="example">夏の暑さは辛い。</td>
+          <td class="zh">夏天的熱度令人難受。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">⚠ 特殊：「いい（よい）」否定→よくない、過去→よかった、て形→よくて（不用「いく」）</div>
+  </div>
+
+  <!-- 常見い形容詞 -->
+  <div class="card">
+    <div class="card-header card-header-i">📋 常見い形容詞一覽（50語）</div>
+    <table>
+      <thead>
+        <tr>
+          <th>日文</th>
+          <th>讀音</th>
+          <th>中文</th>
+          <th>語幹</th>
+          <th>否定形</th>
+          <th>過去形</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 感情・感覚 -->
+        <tr><td class="jp">楽しい</td><td>たのしい</td><td class="zh">快樂的</td><td>たのし</td><td>楽しくない</td><td>楽しかった</td></tr>
+        <tr><td class="jp">悲しい</td><td>かなしい</td><td class="zh">悲傷的</td><td>かなし</td><td>悲しくない</td><td>悲しかった</td></tr>
+        <tr><td class="jp">嬉しい</td><td>うれしい</td><td class="zh">開心的</td><td>うれし</td><td>嬉しくない</td><td>嬉しかった</td></tr>
+        <tr><td class="jp">怖い</td><td>こわい</td><td class="zh">可怕的</td><td>こわ</td><td>怖くない</td><td>怖かった</td></tr>
+        <tr><td class="jp">恥ずかしい</td><td>はずかしい</td><td class="zh">害羞的/丟臉的</td><td>はずかし</td><td>恥ずかしくない</td><td>恥ずかしかった</td></tr>
+        <tr><td class="jp">寂しい</td><td>さびしい</td><td class="zh">寂寞的</td><td>さびし</td><td>寂しくない</td><td>寂しかった</td></tr>
+        <tr><td class="jp">忙しい</td><td>いそがしい</td><td class="zh">忙碌的</td><td>いそがし</td><td>忙しくない</td><td>忙しかった</td></tr>
+        <tr><td class="jp">痛い</td><td>いたい</td><td class="zh">痛的</td><td>いた</td><td>痛くない</td><td>痛かった</td></tr>
+        <!-- 性質・状態 -->
+        <tr><td class="jp">いい／よい</td><td>よい</td><td class="zh">好的 ⚠特殊</td><td>よ</td><td>よくない</td><td>よかった</td></tr>
+        <tr><td class="jp">悪い</td><td>わるい</td><td class="zh">不好的</td><td>わる</td><td>悪くない</td><td>悪かった</td></tr>
+        <tr><td class="jp">難しい</td><td>むずかしい</td><td class="zh">困難的</td><td>むずかし</td><td>難しくない</td><td>難しかった</td></tr>
+        <tr><td class="jp">易しい</td><td>やさしい</td><td class="zh">容易的</td><td>やさし</td><td>易しくない</td><td>易しかった</td></tr>
+        <tr><td class="jp">優しい</td><td>やさしい</td><td class="zh">溫柔的</td><td>やさし</td><td>優しくない</td><td>優しかった</td></tr>
+        <tr><td class="jp">面白い</td><td>おもしろい</td><td class="zh">有趣的</td><td>おもしろ</td><td>面白くない</td><td>面白かった</td></tr>
+        <tr><td class="jp">つまらない</td><td>つまらない</td><td class="zh">無聊的</td><td>つまらな</td><td>つまらなくない</td><td>つまらなかった</td></tr>
+        <tr><td class="jp">すごい</td><td>すごい</td><td class="zh">厲害的</td><td>すご</td><td>すごくない</td><td>すごかった</td></tr>
+        <tr><td class="jp">かわいい</td><td>かわいい</td><td class="zh">可愛的</td><td>かわい</td><td>かわいくない</td><td>かわいかった</td></tr>
+        <tr><td class="jp">美しい</td><td>うつくしい</td><td class="zh">美麗的</td><td>うつくし</td><td>美しくない</td><td>美しかった</td></tr>
+        <!-- 大きさ・量 -->
+        <tr><td class="jp">大きい</td><td>おおきい</td><td class="zh">大的</td><td>おおき</td><td>大きくない</td><td>大きかった</td></tr>
+        <tr><td class="jp">小さい</td><td>ちいさい</td><td class="zh">小的</td><td>ちいさ</td><td>小さくない</td><td>小さかった</td></tr>
+        <tr><td class="jp">長い</td><td>ながい</td><td class="zh">長的</td><td>なが</td><td>長くない</td><td>長かった</td></tr>
+        <tr><td class="jp">短い</td><td>みじかい</td><td class="zh">短的</td><td>みじか</td><td>短くない</td><td>短かった</td></tr>
+        <tr><td class="jp">高い</td><td>たかい</td><td class="zh">高的/貴的</td><td>たか</td><td>高くない</td><td>高かった</td></tr>
+        <tr><td class="jp">低い</td><td>ひくい</td><td class="zh">低的/矮的</td><td>ひく</td><td>低くない</td><td>低かった</td></tr>
+        <tr><td class="jp">広い</td><td>ひろい</td><td class="zh">寬廣的</td><td>ひろ</td><td>広くない</td><td>広かった</td></tr>
+        <tr><td class="jp">狭い</td><td>せまい</td><td class="zh">狹窄的</td><td>せま</td><td>狭くない</td><td>狭かった</td></tr>
+        <tr><td class="jp">重い</td><td>おもい</td><td class="zh">重的</td><td>おも</td><td>重くない</td><td>重かった</td></tr>
+        <tr><td class="jp">軽い</td><td>かるい</td><td class="zh">輕的</td><td>かる</td><td>軽くない</td><td>軽かった</td></tr>
+        <!-- 温度・感触 -->
+        <tr><td class="jp">暑い</td><td>あつい</td><td class="zh">炎熱的（天氣）</td><td>あつ</td><td>暑くない</td><td>暑かった</td></tr>
+        <tr><td class="jp">寒い</td><td>さむい</td><td class="zh">寒冷的</td><td>さむ</td><td>寒くない</td><td>寒かった</td></tr>
+        <tr><td class="jp">熱い</td><td>あつい</td><td class="zh">燙的（物體）</td><td>あつ</td><td>熱くない</td><td>熱かった</td></tr>
+        <tr><td class="jp">冷たい</td><td>つめたい</td><td class="zh">冰涼的</td><td>つめた</td><td>冷たくない</td><td>冷たかった</td></tr>
+        <tr><td class="jp">暖かい</td><td>あたたかい</td><td class="zh">溫暖的</td><td>あたたか</td><td>暖かくない</td><td>暖かかった</td></tr>
+        <tr><td class="jp">涼しい</td><td>すずしい</td><td class="zh">涼爽的</td><td>すずし</td><td>涼しくない</td><td>涼しかった</td></tr>
+        <tr><td class="jp">柔らかい</td><td>やわらかい</td><td class="zh">柔軟的</td><td>やわらか</td><td>柔らかくない</td><td>柔らかかった</td></tr>
+        <tr><td class="jp">堅い</td><td>かたい</td><td class="zh">硬的</td><td>かた</td><td>堅くない</td><td>堅かった</td></tr>
+        <!-- 距離・時間 -->
+        <tr><td class="jp">近い</td><td>ちかい</td><td class="zh">近的</td><td>ちか</td><td>近くない</td><td>近かった</td></tr>
+        <tr><td class="jp">遠い</td><td>とおい</td><td class="zh">遠的</td><td>とお</td><td>遠くない</td><td>遠かった</td></tr>
+        <tr><td class="jp">早い</td><td>はやい</td><td class="zh">早的</td><td>はや</td><td>早くない</td><td>早かった</td></tr>
+        <tr><td class="jp">遅い</td><td>おそい</td><td class="zh">遲/慢的</td><td>おそ</td><td>遅くない</td><td>遅かった</td></tr>
+        <tr><td class="jp">速い</td><td>はやい</td><td class="zh">快速的</td><td>はや</td><td>速くない</td><td>速かった</td></tr>
+        <!-- 色 -->
+        <tr><td class="jp">白い</td><td>しろい</td><td class="zh">白色的</td><td>しろ</td><td>白くない</td><td>白かった</td></tr>
+        <tr><td class="jp">黒い</td><td>くろい</td><td class="zh">黑色的</td><td>くろ</td><td>黒くない</td><td>黒かった</td></tr>
+        <tr><td class="jp">赤い</td><td>あかい</td><td class="zh">紅色的</td><td>あか</td><td>赤くない</td><td>赤かった</td></tr>
+        <tr><td class="jp">青い</td><td>あおい</td><td class="zh">藍/青色的</td><td>あお</td><td>青くない</td><td>青かった</td></tr>
+        <tr><td class="jp">黄色い</td><td>きいろい</td><td class="zh">黃色的</td><td>きいろ</td><td>黄色くない</td><td>黄色かった</td></tr>
+        <!-- 飲食 -->
+        <tr><td class="jp">おいしい</td><td>おいしい</td><td class="zh">好吃的</td><td>おいし</td><td>おいしくない</td><td>おいしかった</td></tr>
+        <tr><td class="jp">不味い</td><td>まずい</td><td class="zh">難吃的/糟糕的</td><td>まず</td><td>不味くない</td><td>不味かった</td></tr>
+        <tr><td class="jp">辛い</td><td>からい</td><td class="zh">辣的</td><td>から</td><td>辛くない</td><td>辛かった</td></tr>
+        <tr><td class="jp">甘い</td><td>あまい</td><td class="zh">甜的</td><td>あま</td><td>甘くない</td><td>甘かった</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ======================== な形容詞 ======================== -->
+<div id="sec-na" class="section">
+
+  <div class="rule-box">
+    <div class="rule-title">📌 變化規則（語幹 = 詞根本身，去掉「だ」）</div>
+    <div class="rule-grid">
+      <div class="rule-item-na">修飾名詞：語幹<span class="arrow">→</span><span class="after">〜な＋名詞</span></div>
+      <div class="rule-item-na">否定：語幹<span class="arrow">→</span><span class="after">〜ではない</span></div>
+      <div class="rule-item-na">過去：語幹<span class="arrow">→</span><span class="after">〜だった</span></div>
+      <div class="rule-item-na">過去否定：語幹<span class="arrow">→</span><span class="after">〜ではなかった</span></div>
+      <div class="rule-item-na">て形：語幹<span class="arrow">→</span><span class="after">〜で</span></div>
+      <div class="rule-item-na">副詞：語幹<span class="arrow">→</span><span class="after">〜に</span></div>
+      <div class="rule-item-na">假設：語幹<span class="arrow">→</span><span class="after">〜なら（ば）</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header card-header-na">🟠 な形容詞變化表 ─ 以「静か（しずか）」為例</div>
+    <table>
+      <thead>
+        <tr>
+          <th>變化形</th>
+          <th>活用形</th>
+          <th>日文形式</th>
+          <th>例句</th>
+          <th>中文</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="form-name">辭書形（普通體）</td>
+          <td class="tag-cell"><span class="tag tag-basic-na">基本形</span></td>
+          <td class="jp">静かだ</td>
+          <td class="example">ここは静かだ。</td>
+          <td class="zh">這裡很安靜。</td>
+        </tr>
+        <tr>
+          <td class="form-name">丁寧體</td>
+          <td class="tag-cell"><span class="tag tag-basic-na">丁寧</span></td>
+          <td class="jp">静かです</td>
+          <td class="example">ここは静かです。</td>
+          <td class="zh">這裡很安靜。（禮貌體）</td>
+        </tr>
+        <tr>
+          <td class="form-name">語幹</td>
+          <td class="tag-cell"><span class="tag tag-basic-na">語幹</span></td>
+          <td class="jp">静か</td>
+          <td class="example">—</td>
+          <td class="zh">詞根本身（去掉だ）</td>
+        </tr>
+        <tr>
+          <td class="form-name">修飾名詞</td>
+          <td class="tag-cell"><span class="tag tag-basic-na">連體形</span></td>
+          <td class="jp">静かな＋名詞</td>
+          <td class="example">静かな部屋。</td>
+          <td class="zh">安靜的房間。（加な再加名詞）</td>
+        </tr>
+        <tr>
+          <td class="form-name">否定（普通體）</td>
+          <td class="tag-cell"><span class="tag tag-neg-na">否定</span></td>
+          <td class="jp">静かではない／静かじゃない</td>
+          <td class="example">ここは静かじゃない。</td>
+          <td class="zh">這裡不安靜。</td>
+        </tr>
+        <tr>
+          <td class="form-name">否定（丁寧體）</td>
+          <td class="tag-cell"><span class="tag tag-neg-na">否定丁寧</span></td>
+          <td class="jp">静かではありません</td>
+          <td class="example">ここは静かではありません。</td>
+          <td class="zh">這裡不安靜。（禮貌體）</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去（普通體）</td>
+          <td class="tag-cell"><span class="tag tag-past-na">過去</span></td>
+          <td class="jp">静かだった</td>
+          <td class="example">昨日は静かだった。</td>
+          <td class="zh">昨天很安靜。</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去（丁寧體）</td>
+          <td class="tag-cell"><span class="tag tag-past-na">過去丁寧</span></td>
+          <td class="jp">静かでした</td>
+          <td class="example">昨日は静かでした。</td>
+          <td class="zh">昨天很安靜。（禮貌體）</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去否定（普通）</td>
+          <td class="tag-cell"><span class="tag tag-past-neg-na">過去否定</span></td>
+          <td class="jp">静かではなかった</td>
+          <td class="example">昨日は静かではなかった。</td>
+          <td class="zh">昨天不安靜。</td>
+        </tr>
+        <tr>
+          <td class="form-name">過去否定（丁寧）</td>
+          <td class="tag-cell"><span class="tag tag-past-neg-na">過去否定丁寧</span></td>
+          <td class="jp">静かではありませんでした</td>
+          <td class="example">昨日は静かではありませんでした。</td>
+          <td class="zh">昨天不安靜。（禮貌體）</td>
+        </tr>
+        <tr>
+          <td class="form-name">て形（並列/原因）</td>
+          <td class="tag-cell"><span class="tag tag-other-na">て形</span></td>
+          <td class="jp">静かで</td>
+          <td class="example">静かで、住みやすい町だ。</td>
+          <td class="zh">安靜，是個容易居住的城鎮。</td>
+        </tr>
+        <tr>
+          <td class="form-name">副詞形</td>
+          <td class="tag-cell"><span class="tag tag-other-na">副詞</span></td>
+          <td class="jp">静かに</td>
+          <td class="example">静かに話してください。</td>
+          <td class="zh">請安靜地說話。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜になる（變化）</td>
+          <td class="tag-cell"><span class="tag tag-other-na">変化</span></td>
+          <td class="jp">静かになる</td>
+          <td class="example">夜になって静かになった。</td>
+          <td class="zh">到了晚上就變安靜了。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜にする（使役）</td>
+          <td class="tag-cell"><span class="tag tag-other-na">使役</span></td>
+          <td class="jp">静かにする</td>
+          <td class="example">子供を静かにさせた。</td>
+          <td class="zh">讓孩子安靜下來。</td>
+        </tr>
+        <tr>
+          <td class="form-name">假設形</td>
+          <td class="tag-cell"><span class="tag tag-other-na">假設</span></td>
+          <td class="jp">静かなら（ば）</td>
+          <td class="example">静かなら、勉強できる。</td>
+          <td class="zh">如果安靜的話，就能念書。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜そう（樣態）</td>
+          <td class="tag-cell"><span class="tag tag-other-na">樣態</span></td>
+          <td class="jp">静かそう</td>
+          <td class="example">あの図書館は静かそうだ。</td>
+          <td class="zh">那間圖書館看起來很安靜。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜すぎる（過度）</td>
+          <td class="tag-cell"><span class="tag tag-other-na">過度</span></td>
+          <td class="jp">静かすぎる</td>
+          <td class="example">静かすぎて逆に怖い。</td>
+          <td class="zh">太安靜了，反而感到害怕。</td>
+        </tr>
+        <tr>
+          <td class="form-name">〜さ（名詞化）</td>
+          <td class="tag-cell"><span class="tag tag-other-na">名詞化</span></td>
+          <td class="jp">静かさ</td>
+          <td class="example">この静かさが好きだ。</td>
+          <td class="zh">我喜歡這份安靜。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">💡 口語中「ではない」常縮略為「じゃない」；「ではなかった」→「じゃなかった」</div>
+  </div>
+
+  <!-- 常見な形容詞 -->
+  <div class="card">
+    <div class="card-header card-header-na">📋 常見な形容詞一覽（40語）</div>
+    <table>
+      <thead>
+        <tr>
+          <th>日文（語幹）</th>
+          <th>讀音</th>
+          <th>中文</th>
+          <th>修飾名詞</th>
+          <th>副詞形（〜に）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="jp">静か</td><td>しずか</td><td class="zh">安靜的</td><td>静かな〜</td><td>静かに</td></tr>
+        <tr><td class="jp">賑やか</td><td>にぎやか</td><td class="zh">熱鬧的</td><td>賑やかな〜</td><td>賑やかに</td></tr>
+        <tr><td class="jp">綺麗</td><td>きれい</td><td class="zh">漂亮的/乾淨的</td><td>綺麗な〜</td><td>綺麗に</td></tr>
+        <tr><td class="jp">有名</td><td>ゆうめい</td><td class="zh">有名的</td><td>有名な〜</td><td>有名に</td></tr>
+        <tr><td class="jp">親切</td><td>しんせつ</td><td class="zh">親切的</td><td>親切な〜</td><td>親切に</td></tr>
+        <tr><td class="jp">丁寧</td><td>ていねい</td><td class="zh">有禮貌的/仔細的</td><td>丁寧な〜</td><td>丁寧に</td></tr>
+        <tr><td class="jp">便利</td><td>べんり</td><td class="zh">方便的</td><td>便利な〜</td><td>便利に</td></tr>
+        <tr><td class="jp">不便</td><td>ふべん</td><td class="zh">不方便的</td><td>不便な〜</td><td>不便に</td></tr>
+        <tr><td class="jp">大切</td><td>たいせつ</td><td class="zh">重要的/珍貴的</td><td>大切な〜</td><td>大切に</td></tr>
+        <tr><td class="jp">大事</td><td>だいじ</td><td class="zh">重要的</td><td>大事な〜</td><td>大事に</td></tr>
+        <tr><td class="jp">簡単</td><td>かんたん</td><td class="zh">簡單的</td><td>簡単な〜</td><td>簡単に</td></tr>
+        <tr><td class="jp">複雑</td><td>ふくざつ</td><td class="zh">複雜的</td><td>複雑な〜</td><td>複雑に</td></tr>
+        <tr><td class="jp">真面目</td><td>まじめ</td><td class="zh">認真的</td><td>真面目な〜</td><td>真面目に</td></tr>
+        <tr><td class="jp">暇</td><td>ひま</td><td class="zh">空閒的/無聊的</td><td>暇な〜</td><td>暇に</td></tr>
+        <tr><td class="jp">元気</td><td>げんき</td><td class="zh">有活力的</td><td>元気な〜</td><td>元気に</td></tr>
+        <tr><td class="jp">丈夫</td><td>じょうぶ</td><td class="zh">健壯的/耐用的</td><td>丈夫な〜</td><td>丈夫に</td></tr>
+        <tr><td class="jp">好き</td><td>すき</td><td class="zh">喜歡的</td><td>好きな〜</td><td>—</td></tr>
+        <tr><td class="jp">嫌い</td><td>きらい</td><td class="zh">討厭的</td><td>嫌いな〜</td><td>—</td></tr>
+        <tr><td class="jp">大好き</td><td>だいすき</td><td class="zh">非常喜歡的</td><td>大好きな〜</td><td>—</td></tr>
+        <tr><td class="jp">大嫌い</td><td>だいきらい</td><td class="zh">非常討厭的</td><td>大嫌いな〜</td><td>—</td></tr>
+        <tr><td class="jp">上手</td><td>じょうず</td><td class="zh">擅長的</td><td>上手な〜</td><td>上手に</td></tr>
+        <tr><td class="jp">下手</td><td>へた</td><td class="zh">不擅長的</td><td>下手な〜</td><td>下手に</td></tr>
+        <tr><td class="jp">得意</td><td>とくい</td><td class="zh">拿手的</td><td>得意な〜</td><td>得意に</td></tr>
+        <tr><td class="jp">苦手</td><td>にがて</td><td class="zh">不擅長/不喜歡的</td><td>苦手な〜</td><td>—</td></tr>
+        <tr><td class="jp">必要</td><td>ひつよう</td><td class="zh">必要的</td><td>必要な〜</td><td>—</td></tr>
+        <tr><td class="jp">自由</td><td>じゆう</td><td class="zh">自由的</td><td>自由な〜</td><td>自由に</td></tr>
+        <tr><td class="jp">安全</td><td>あんぜん</td><td class="zh">安全的</td><td>安全な〜</td><td>安全に</td></tr>
+        <tr><td class="jp">危険</td><td>きけん</td><td class="zh">危險的</td><td>危険な〜</td><td>危険に</td></tr>
+        <tr><td class="jp">健康</td><td>けんこう</td><td class="zh">健康的</td><td>健康な〜</td><td>健康に</td></tr>
+        <tr><td class="jp">素敵</td><td>すてき</td><td class="zh">很棒的/迷人的</td><td>素敵な〜</td><td>素敵に</td></tr>
+        <tr><td class="jp">特別</td><td>とくべつ</td><td class="zh">特別的</td><td>特別な〜</td><td>特別に</td></tr>
+        <tr><td class="jp">普通</td><td>ふつう</td><td class="zh">普通的</td><td>普通な〜</td><td>普通に</td></tr>
+        <tr><td class="jp">正直</td><td>しょうじき</td><td class="zh">誠實的</td><td>正直な〜</td><td>正直に</td></tr>
+        <tr><td class="jp">熱心</td><td>ねっしん</td><td class="zh">熱心的/積極的</td><td>熱心な〜</td><td>熱心に</td></tr>
+        <tr><td class="jp">積極的</td><td>せっきょくてき</td><td class="zh">積極的</td><td>積極的な〜</td><td>積極的に</td></tr>
+        <tr><td class="jp">消極的</td><td>しょうきょくてき</td><td class="zh">消極的</td><td>消極的な〜</td><td>消極的に</td></tr>
+        <tr><td class="jp">快適</td><td>かいてき</td><td class="zh">舒適的</td><td>快適な〜</td><td>快適に</td></tr>
+        <tr><td class="jp">変</td><td>へん</td><td class="zh">奇怪的</td><td>変な〜</td><td>変に</td></tr>
+        <tr><td class="jp">残念</td><td>ざんねん</td><td class="zh">可惜的/遺憾的</td><td>残念な〜</td><td>残念に</td></tr>
+        <tr><td class="jp">無駄</td><td>むだ</td><td class="zh">浪費的/徒勞的</td><td>無駄な〜</td><td>無駄に</td></tr>
+      </tbody>
+    </table>
+    <div class="note">💡「好き・嫌い」雖是な形容詞，但不用副詞形に。「的」結尾（〜てき）的詞大多是な形容詞。</div>
+  </div>
+</div>
+
+<script>
+function switchTab(type) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.remove('active-i', 'active-na');
+  });
+  document.getElementById('sec-' + type).classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  if (type === 'i') {
+    tabs[0].classList.add('active-i');
+  } else {
+    tabs[1].classList.add('active-na');
+  }
+}
+</script>
+
+</body>
+</html>
