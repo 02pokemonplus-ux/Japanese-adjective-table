@@ -129,25 +129,25 @@ body.grayscale.dark {
 /* ══ Theme toggle button ══ */
 .theme-toggle-group {
   display: flex;
-  gap: 4px;
   align-items: center;
 }
 .theme-btn {
   border: 1.5px solid #ddd;
   background: #fff;
-  border-radius: 8px;
-  padding: 4px 10px;
-  font-size: 0.78rem;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: #666;
+  color: #555;
   transition: all 0.15s;
-  line-height: 1.4;
 }
 .theme-btn:hover { border-color: #aaa; background: #f5f5f5; }
-.theme-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #fff; }
-body.dark .theme-btn { background: #1a1c26; border-color: #3a3d52; color: #aaa; }
-body.dark .theme-btn:hover { border-color: #666; }
-body.dark .theme-btn.active { background: #e8e8f0; border-color: #e8e8f0; color: #1a1c26; }
+.theme-btn svg { width: 17px; height: 17px; }
+body.dark .theme-btn { background: #1a1c26; border-color: #3a3d52; color: #ccc; }
+body.dark .theme-btn:hover { border-color: #666; background: #23253a; }
 
 /* ── Header ── */
 .header {
@@ -522,9 +522,9 @@ body.dark .furigana-term::before { border-top-color: #e8e8f0; }
     <span class="stat-badge" id="stat-total">共 0 題</span>
   </div>
   <div class="theme-toggle-group">
-    <button class="theme-btn active" id="theme-light" onclick="setTheme('light')" title="亮色模式">亮</button>
-    <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')" title="深色模式">暗</button>
-    <button class="theme-btn" id="theme-gray" onclick="setTheme('gray')" title="黑白模式">灰</button>
+    <button class="theme-btn" id="theme-toggle" onclick="cycleTheme()" title="切換主題" aria-label="切換主題">
+      <span id="theme-icon"></span>
+    </button>
   </div>
 </div>
 
@@ -1559,7 +1559,20 @@ function getExample(item) {
   const adj = item.adj;
   if (!adj.ex) return null;
   const key = exKeyFor(item.form);
-  return adj.ex[key] || null;
+  const ex = adj.ex[key];
+  if (!ex) return null;
+
+  // 丁寧體 forms (negd/pastd/pastnegd) reuse the same example template as
+  // their plain-form counterparts. Those templates often end the blank with
+  // a literal 'です' (e.g. '__です。') written for the plain-form answer.
+  // Since the 丁寧體 answer itself already ends in です (楽しくないです),
+  // filling it into a 'です'-suffixed template would duplicate です です.
+  // Detect that case and strip the redundant trailing です from the template.
+  const isTeineiForm = item.form === 'negd' || item.form === 'pastd' || item.form === 'pastnegd';
+  if (isTeineiForm && /__です/.test(ex.jp)) {
+    return { jp: ex.jp.replace('__です', '__'), zh: ex.zh };
+  }
+  return ex;
 }
 
 // ══════════════════════════════════════════
@@ -1921,14 +1934,33 @@ function filterRef(val) {
 // ══════════════════════════════════════════
 //  THEME
 // ══════════════════════════════════════════
+const THEME_ORDER = ['light', 'dark', 'gray'];
+const THEME_ICONS = {
+  light: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg>`,
+  dark: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`,
+  gray: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" stroke="none"></path></svg>`,
+};
+const THEME_TITLES = { light: '亮色模式', dark: '深色模式', gray: '黑白模式' };
+
 function setTheme(t) {
   document.body.classList.remove('dark', 'grayscale');
   if (t === 'dark') document.body.classList.add('dark');
   else if (t === 'gray') document.body.classList.add('grayscale');
-  ['light','dark','gray'].forEach(x => {
-    document.getElementById('theme-'+x).classList.toggle('active', x === t);
-  });
+
+  const icon = document.getElementById('theme-icon');
+  const btn = document.getElementById('theme-toggle');
+  if (icon) icon.innerHTML = THEME_ICONS[t];
+  if (btn) btn.title = THEME_TITLES[t];
+
   try { localStorage.setItem('adj-theme', t); } catch(e) {}
+}
+
+function cycleTheme() {
+  let current = 'light';
+  try { current = localStorage.getItem('adj-theme') || 'light'; } catch(e) {}
+  const idx = THEME_ORDER.indexOf(current);
+  const next = THEME_ORDER[(idx + 1) % THEME_ORDER.length];
+  setTheme(next);
 }
 
 // ══════════════════════════════════════════
@@ -1937,8 +1969,10 @@ function setTheme(t) {
 (function(){
   try {
     const saved = localStorage.getItem('adj-theme');
-    if (saved) setTheme(saved);
-  } catch(e) {}
+    setTheme(saved || 'light');
+  } catch(e) {
+    setTheme('light');
+  }
 })();
 restart();
 </script>
